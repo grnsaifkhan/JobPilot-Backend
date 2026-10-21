@@ -4,6 +4,8 @@ import pool from './config/database.js';
 
 import jobRoutes from './routes/jobRoutes.js';
 
+import authRoutes from './modules/auth/auth.routes.js';
+
 const app = express();
 
 // Middleware
@@ -43,5 +45,10 @@ res.status(500).json({
 
 // job route
 app.use('/api/jobs', jobRoutes)
+
+
+
+//user auth register
+app.use('/api/auth', authRoutes);
 
 export default app;
