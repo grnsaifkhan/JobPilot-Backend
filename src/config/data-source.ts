@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import 'dotenv/config'
+// import 'dotenv/config' // no need to import here cause server.ts already imported this 
 import { DataSource } from 'typeorm';
 import { User } from '../entities/User.js';
 
