@@ -3,13 +3,13 @@ import { User } from "../../entities/User.js";
 
 const userRepository = AppDataSource.getRepository(User);
 
-
 export function findUserByEmail(email: string): Promise<User | null> {
-    return userRepository.findOne({
-        where: {email}
-    });
+  return userRepository
+    .createQueryBuilder("user")
+    .addSelect("user.passwordHash")
+    .where("user.email = :email", { email })
+    .getOne();
 }
-
 
 export function createUser(data: {
   name: string;
