@@ -80,7 +80,7 @@ describe("POST /api/auth/login (database integration)", () => {
     expect(savedUser).not.toBeNull();
 
     expect(decoded).toMatchObject({
-      sub: savedUser!.id,
+      sub: String(savedUser!.id),
     });
   });
 

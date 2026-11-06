@@ -139,7 +139,7 @@ describe("loginUser", () => {
       process.env.JWT_SECRET!,
     ) as jwt.JwtPayload;
 
-    expect(decoded.sub).toBe(1);
+    expect(decoded.sub).toBe("1");
     expect(decoded.exp).toBeDefined();
     expect(decoded.exp! - decoded.iat!).toBe(15 * 60);
   });
