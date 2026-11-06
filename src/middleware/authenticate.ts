@@ -1,6 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { success } from "zod";
 
 export interface AuthenticationRequest extends Request {
   userId?: number;

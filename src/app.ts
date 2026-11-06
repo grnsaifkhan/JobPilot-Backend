@@ -1,10 +1,9 @@
+import express from "express";
+import pool from "./config/database.js";
 
-import express from 'express';
-import pool from './config/database.js';
+import jobRoutes from "./modules/jobs/jobs.routes.js";
 
-import jobRoutes from './routes/jobRoutes.js';
-
-import authRoutes from './modules/auth/auth.routes.js';
+import authRoutes from "./modules/auth/auth.routes.js";
 
 const app = express();
 
@@ -12,43 +11,37 @@ const app = express();
 app.use(express.json());
 
 // Health-check endpoint
-app.get('/api/health', (_req, res) => {
+app.get("/api/health", (_req, res) => {
   res.status(200).json({
     success: true,
-    message: 'JobPilot API is running',
+    message: "JobPilot API is running",
   });
 });
 
-
 // Database health-check endpoint
-app.get('/api/health/db', async (_req, res) => {
-try {
-const connection = await pool.getConnection();
-connection.release();
+app.get("/api/health/db", async (_req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    connection.release();
 
-res.status(200).json({
-  success: true,
-  message: 'MySQL connected successfully',
+    res.status(200).json({
+      success: true,
+      message: "MySQL connected successfully",
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Database connection failed",
+    });
+  }
 });
-
-} catch (error) {
-console.error('Database connection failed:', error);
-
-res.status(500).json({
-  success: false,
-  message: 'Database connection failed',
-});
-
-}
-});
-
-
-// job route
-app.use('/api/jobs', jobRoutes)
-
-
 
 //user auth register
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
+
+// job route
+app.use("/api/jobs", jobRoutes);
 
 export default app;
