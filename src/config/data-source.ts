@@ -1,22 +1,22 @@
-import 'reflect-metadata';
-import 'dotenv/config'
-import { DataSource } from 'typeorm';
-import { User } from '../entities/User.js';
+import "reflect-metadata";
+// import 'dotenv/config' // no need to import here cause server.ts already imported this
+import { DataSource } from "typeorm";
+import { User } from "../entities/User.js";
+import { JobApplication } from "../entities/JobApplication.js";
 
 const AppDataSource = new DataSource({
-    type: 'mysql',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT) || 3306,
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+  type: "mysql",
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT) || 3306,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 
+  entities: [User, JobApplication],
+  migrations: [process.cwd() + "/dist/migrations/*.js"],
 
-    entities: [User],
-    migrations: [process.cwd() + '/dist/migrations/*.js'],
-
-    synchronize: false,
-    logging: false
-})
+  synchronize: false,
+  logging: false,
+});
 
 export default AppDataSource;
